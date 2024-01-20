@@ -1,8 +1,7 @@
 package com.example.myApp.models;
 
-import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.Type;
+import javax.persistence.*;
 
 @Entity
 @Table(name = "images")

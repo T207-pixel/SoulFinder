@@ -5,7 +5,11 @@
     <title>BuySell</title>
 </head>
 <body>
-<h1>BuySell</h1><hr>
+<h1>BuySell | <a href = "/login">Войти</a></h1><hr>
+<form action="/logout" method="post">
+    <input type="hidden" name="_csrf" value="${_csrf.token}">
+    <input type="submit" value="Выйти">
+</form>
 <h4>Товары со всей России</h4>
 
 <form action="/" method="get">
