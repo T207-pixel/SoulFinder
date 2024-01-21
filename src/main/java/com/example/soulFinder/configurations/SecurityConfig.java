@@ -1,6 +1,6 @@
-package com.example.myApp.configurations;
+package com.example.soulFinder.configurations;
 
-import com.example.myApp.services.CustomUserDetailsService;
+import com.example.soulFinder.services.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -22,7 +22,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/product/**", "/images/**", "/registration", "/user/**") // ** - любая строка
+                .antMatchers("/", "/post/**", "/images/**", "/registration", "/user/**") // ** - любая строка
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()

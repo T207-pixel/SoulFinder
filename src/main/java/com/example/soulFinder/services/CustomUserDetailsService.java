@@ -1,6 +1,6 @@
-package com.example.myApp.services;
+package com.example.soulFinder.services;
 
-import com.example.myApp.repositories.UserRepository;
+import com.example.soulFinder.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

@@ -1,6 +1,6 @@
-package com.example.myApp.repositories;
+package com.example.soulFinder.repositories;
 
-import com.example.myApp.models.Image;
+import com.example.soulFinder.models.Image;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ImageRepository extends JpaRepository<Image, Long> {

@@ -1,8 +1,14 @@
-package com.example.myApp.models;
+package com.example.soulFinder.models;
 
-import com.example.myApp.models.enums.Role;
+import com.example.soulFinder.models.enums.Role;
 import lombok.*;
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Pattern;
+
+import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
@@ -20,11 +26,16 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "email", unique = true)
+    @NotEmpty(message = "имейл не должен быть пустым")
+    @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "неверный формат почты")
     private String email;
 
+    @NotEmpty(message = "номер телефона не должен быть пустым")
+    @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "неверный формат телефона")
     @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
+    @NotEmpty(message = "Имя не должно быть пустым")
     @Column(name = "name")
     private String name;
 
@@ -44,9 +55,12 @@ public class User implements UserDetails {
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(cascade = CascadeType.ALL, fetch =FetchType.EAGER, mappedBy = "user")
-    private List<Product> products = new ArrayList<>();
+    private List<Post> posts = new ArrayList<>();
 
     private LocalDateTime dateOfCreated;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "post_p")
+    private List<Participant> participants = new ArrayList<>();
 
     @PrePersist
     private void init() {
@@ -86,4 +100,8 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return active;
     }
+
+//    public void addPostParticipant(Post post) {
+//        participant_posts.add(post);
+//    }
 }

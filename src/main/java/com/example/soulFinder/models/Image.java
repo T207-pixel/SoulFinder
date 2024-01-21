@@ -1,4 +1,4 @@
-package com.example.myApp.models;
+package com.example.soulFinder.models;
 
 import lombok.*;
 import javax.persistence.*;
@@ -30,10 +30,10 @@ public class Image {
     @Column(name = "isPreviewImage")
     private boolean isPreviewImage;
 
-    @Column(name = "bytes", columnDefinition = "longblob")
+    @Column(name = "bytes")
     @Lob // для указания, что поле сущности должно быть сохранено как большой объект (LOB - Large Object) в базе данных
     private byte[] bytes;
 
     @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    private Product product;
+    private Post post;
 }

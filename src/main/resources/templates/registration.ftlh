@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BUYSELL</title>
+    <title>SoulFinder</title>
 </head>
 <body>
-<h1>BUYSELL</h1><hr>
+<h1>SoulFinder</h1><hr>
 <h4>Регистрация</h4>
 <form action="/registration" method="post">
     Имя пользователя: <input type="text" name="name"><br><br>
@@ -14,8 +14,15 @@
     <input type="hidden" name="_csrf" value="${_csrf.token}">
     <input type="submit" value="Зарегистрироваться"/>
 </form>
+    <#if errors??>
+    <ul>
+        <#list errors as error>
+        <li style="color: red">${error.defaultMessage}</li>
+    </#list>
+</ul>
+</#if>
 <#if errorMessage??>
-    <h2 style="color: red">${errorMessage}</h2>
+    <li style="color: red">${errorMessage}</li>
 </#if>
 </body>
 </html>

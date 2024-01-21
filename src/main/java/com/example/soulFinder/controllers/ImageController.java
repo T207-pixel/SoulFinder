@@ -1,7 +1,7 @@
-package com.example.myApp.controllers;
+package com.example.soulFinder.controllers;
 
-import com.example.myApp.models.Image;
-import com.example.myApp.repositories.ImageRepository;
+import com.example.soulFinder.models.Image;
+import com.example.soulFinder.repositories.ImageRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
 import org.springframework.http.MediaType;

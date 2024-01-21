@@ -1,8 +1,8 @@
-package com.example.myApp.services;
+package com.example.soulFinder.services;
 
-import com.example.myApp.models.User;
-import com.example.myApp.models.enums.Role;
-import com.example.myApp.repositories.UserRepository;
+import com.example.soulFinder.models.User;
+import com.example.soulFinder.models.enums.Role;
+import com.example.soulFinder.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -22,17 +22,20 @@ public class UserService {
 
     private final PasswordEncoder passwordEncoder;
 
-    public boolean createUser(User user) {
+    public String createUser(User user) {
         String email = user.getEmail();
+        String phoneNumber = user.getPhoneNumber();
         if (userRepository.findByEmail(email) != null) {
-            return false;
+            return "Пользователь с email: " + email + " уже существует";
+        } else if (userRepository.findByPhoneNumber(phoneNumber) != null) {
+            return "Пользователь с телефоном: " + phoneNumber + " уже существует";
         }
         user.setActive(true);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.getRoles().add(Role.ROLE_USER);
+        user.getRoles().add(Role.ROLE_ADMIN);
         log.info("Saving new User with email: {}", email);
         userRepository.save(user);
-        return true;
+        return "";
     }
 
     public List<User> list() {

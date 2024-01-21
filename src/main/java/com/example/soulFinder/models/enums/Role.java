@@ -1,4 +1,4 @@
-package com.example.myApp.models.enums;
+package com.example.soulFinder.models.enums;
 
 import org.springframework.security.core.GrantedAuthority;
 

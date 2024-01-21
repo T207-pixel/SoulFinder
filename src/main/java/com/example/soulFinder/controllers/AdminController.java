@@ -1,8 +1,8 @@
-package com.example.myApp.controllers;
+package com.example.soulFinder.controllers;
 
-import com.example.myApp.models.User;
-import com.example.myApp.models.enums.Role;
-import com.example.myApp.services.UserService;
+import com.example.soulFinder.models.User;
+import com.example.soulFinder.models.enums.Role;
+import com.example.soulFinder.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;

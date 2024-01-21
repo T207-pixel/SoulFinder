@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BUYSELL</title>
+    <title>SoulFinder</title>
 </head>
 <body>
-<h1>BUYSELL</h1>
+<h1>SoulFinder</h1>
 <hr>
 <h4>Панель администратора</h4>
 <table border="1">

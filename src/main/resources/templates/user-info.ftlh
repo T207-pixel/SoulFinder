@@ -1,22 +1,23 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>BUYSELL</title>
+    <title>SoulFinder</title>
 </head>
 <body>
-<h1>BUYSELL</h1><hr>
-<h3>Подробная информация о пользователе ${user.name}</h3>
+<h1>SoulFinder</h1><hr>
+<h3>Контактная информация пользователя ${user.name}</h3>
+<b>Если увидите пропавшего ченловека данного пользователя, обращайтесь по этим контактам:</b><br>
 <b>Номер телефона: </b> ${user.phoneNumber}<br>
 <b>Email: </b> ${user.email}<br>
 
-<h4>Товары пользователя ${user.name}</h4>
+<h4>Объявления пользователя ${user.name}</h4>
 
-<#list products as product>
+<#list posts as post>
     <div>
-        <p><b>${product.title}</b> ${product.price} руб. | <a href="/product/${product.id}">Подробнее...</a> </p>
+        <p><b>${post.title}</b> | <a href="/post/${post.id}">Подробнее...</a> </p>
     </div>
     <#else>
-    <h3>Товаров нет</h3>
+    <h3>Пропавших нет</h3>
 </#list>
 
 <#if errorMessage??>
