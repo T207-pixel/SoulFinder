@@ -7,9 +7,7 @@ import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
-import javax.validation.constraints.Max;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Pattern;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 import java.util.*;
 
@@ -25,23 +23,30 @@ public class Post {
     private Long id;
 
     @Column(name = "title")
-//    @Pattern(regexp = "^[a-zA-Z]+\\s[a-zA-Z]+\\s[a-zA-Z]+$", message = "Введите с пробелами три слова")
+    @NotEmpty(message = "Имя Фамилия Отчество  не должно быть пустыми")
+    @Size(min = 5, max = 100, message = "Введите понятное фио")
     private String title;
 
     @Column(name = "age")
-    @Min(0)
-    @Max(130)
+    @Min(value = 0, message = "Возраст не может быть отрицательным")
+    @Max(value = 130, message = "Возраст не может быть больше 130")
+    @NotNull(message = "Возраст должен быть указан")
     private Integer age;
 
-    @Column(name = "description", columnDefinition = "text")
+    @NotEmpty(message = "Описание не должно быть пустым")
+    @Column(name = "description", columnDefinition = "text", length = 255)
     private String description;
 
+    @NotEmpty(message = "локация не должна быть пустой")
     @Column(name = "location")
+    @Size(max = 250, message = "Описание не должно быть более 250 символов")
     private String location;
 
     @Column(name = "date_of_disappearance")
     @Temporal(TemporalType.DATE)
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+
+    @NotNull(message = "Введите дату")
     private Date date_of_disappearance;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "post")

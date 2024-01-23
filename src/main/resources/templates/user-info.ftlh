@@ -20,6 +20,15 @@
     <h3>Пропавших нет</h3>
 </#list>
 
+<h3>Участвует в поисковых операциях</h3>
+<#list postsParticipant as post>
+    <div>
+        <p><b>${post.title}</b> | <a href="/post/${post.id}">Подробнее...</a> </p>
+    </div>
+    <#else>
+    Пока ни в одной
+</#list>
+
 <#if errorMessage??>
     <h2 style="color: red">${errorMessage}</h2>
 </#if>

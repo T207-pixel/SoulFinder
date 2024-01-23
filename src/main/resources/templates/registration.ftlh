@@ -14,12 +14,12 @@
     <input type="hidden" name="_csrf" value="${_csrf.token}">
     <input type="submit" value="Зарегистрироваться"/>
 </form>
-    <#if errors??>
+<#if errors??>
     <ul>
         <#list errors as error>
         <li style="color: red">${error.defaultMessage}</li>
     </#list>
-</ul>
+    </ul>
 </#if>
 <#if errorMessage??>
     <li style="color: red">${errorMessage}</li>

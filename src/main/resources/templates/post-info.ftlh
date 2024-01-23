@@ -12,12 +12,12 @@
     <img src="/images/${img.id}" height="333px"/><br><br>
 </#list>
 
-<b>Имя Фамилия Отчество:: </b>${post.title}<br>
+<b>Имя Фамилия Отчество: </b>${post.title}<br>
 <b>Возраст пропавшего: </b>${post.age}<br>
 <b>Описание пропавшего: </b>${post.description}<br>
 <b>Дата исчезновения: </b>${post.date_of_disappearance}<br>
 <b>Город/Местность исчезновения: </b>${post.location}<br>
-<b>Дата создания поста: </b>${post.dateOfCreated}<br>
+<b>Дата создания поста: </b>${post.dateOfCreated?date("yyyy-MM-dd")}<br>
 <b>Человек, создавший данную запись: </b><a href="/user/${post.user.id}">${post.user.name}</a><br>
 
 <form action="/post/${post.id}/take_part" method="post">
@@ -26,6 +26,7 @@
 </form>
 
 <#if users?? && users?size != 0>
+    Список участников:
 <ol>
         <#list users as user>
         <li><a href="/user/${user.id}">${user.name} </a> </li>

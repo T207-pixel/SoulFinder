@@ -14,4 +14,6 @@ public interface ParticipantRepository extends JpaRepository<Participant, Long> 
     @Query(value = "SELECT u.* FROM users u JOIN participants pp ON u.id = pp.user_id WHERE pp.post_id = :postId", nativeQuery = true)
     List<Long> findUsersByPostId(@Param("postId") Long postId);
 
+    @Query(value = "SELECT p.* FROM posts p JOIN participants pp ON p.id = pp.post_id WHERE pp.user_id = :userId", nativeQuery = true)
+    List<Long> findPostsByUserId(@Param("userId") Long userId);
 }
