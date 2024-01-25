@@ -1,5 +1,6 @@
 package com.example.soulFinder.models;
 
+import com.example.soulFinder.models.customValidators.PastOrPresentDate;
 import lombok.*;
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
@@ -44,6 +45,7 @@ public class Post {
 
     @Column(name = "date_of_disappearance")
     @Temporal(TemporalType.DATE)
+    @PastOrPresentDate
     @DateTimeFormat(pattern = "yyyy-MM-dd")
 
     @NotNull(message = "Введите дату")

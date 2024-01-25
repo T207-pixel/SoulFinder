@@ -37,12 +37,14 @@ public class UserController {
     @PostMapping("/registration")
     public String createUser(@Valid User user, BindingResult bindingResult, Model model) {
         if (bindingResult.hasErrors()) {
+            model.addAttribute("invalidUser", user);
             model.addAttribute("errors", bindingResult.getAllErrors());
             return "registration";
         }
-        String msg = userService.createUser(user);
-        if (!msg.isEmpty()) {
-            model.addAttribute("errorMessage", msg);
+        String warningMsg = userService.createUser(user);
+        if (!warningMsg.isEmpty()) {
+            model.addAttribute("invalidUser", user);
+            model.addAttribute("errorMessage", warningMsg);
             return "registration";
         }
         return "redirect:/login";

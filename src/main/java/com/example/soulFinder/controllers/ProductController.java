@@ -60,7 +60,7 @@ public class ProductController {
             model.addAttribute("posts", productService.listProducts(""));
             model.addAttribute("user", productService.getUserByPrincipal(principal));
             model.addAttribute("errors", bindingResult.getAllErrors());
-//            model.addAttribute("incorrectPostData", post);
+            model.addAttribute("errorPost", post);
             return "create-post-page";
         }
         productService.saveProduct(principal, post, file1, file2, file3);

@@ -5,6 +5,7 @@ import lombok.*;
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
@@ -26,17 +27,15 @@ public class User implements UserDetails {
     private Long id;
 
     @Column(name = "email", unique = true)
-    @NotEmpty(message = "имейл не должен быть пустым")
     @Pattern(regexp = "^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$", message = "неверный формат почты")
     private String email;
 
-    @NotEmpty(message = "номер телефона не должен быть пустым")
     @Pattern(regexp = "^\\+?[1-9]\\d{1,14}$", message = "неверный формат телефона")
     @Column(name = "phone_number", unique = true)
     private String phoneNumber;
 
-    @NotEmpty(message = "Имя не должно быть пустым")
     @Column(name = "name")
+    @Size(min = 5, max = 100, message = "Имя должно иметь 3 - 25 символов")
     private String name;
 
     @Column(name = "active")
@@ -46,6 +45,12 @@ public class User implements UserDetails {
     @JoinColumn(name = "image_id")
     private Image avatar;
 
+    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@#$%^&!_\\-+=]).{6,}$", message = "пароль должен содержать следующие символы: " +
+            "1) Маленькую латинскую букву " +
+            "2) Большую латинскую букву " +
+            "3) Число " +
+            "4) Спец символ " +
+            "5) Быть не менее 6 символов ")
     @Column(name = "password", length = 100)
     private String password;
 
