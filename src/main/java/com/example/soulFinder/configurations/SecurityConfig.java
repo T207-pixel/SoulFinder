@@ -1,6 +1,8 @@
 package com.example.soulFinder.configurations;
 
+import com.example.soulFinder.configurations.securityhandlers.CustomUsernamePasswordAuthenticationFilter;
 import com.example.soulFinder.services.CustomUserDetailsService;
+import com.example.soulFinder.configurations.securityhandlers.CustomAuthenticationFailureHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -10,6 +12,7 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.RedirectStrategy;
 
 @EnableWebSecurity
 @RequiredArgsConstructor
@@ -18,16 +21,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
     private final CustomUserDetailsService userDetailsService;
 
+    private final CustomAuthenticationFailureHandler failureHandler;
+
+    private CustomUsernamePasswordAuthenticationFilter authenticationFilter;
+
+    public RedirectStrategy redirectStrategy;
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/", "/post/**", "/images/**", "/registration", "/user/**") // ** - любая строка
+                .antMatchers("/", "/post/**", "/images/**", "/registration", "/user/**", "/static/**") // ** - любая строка
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
+//                .addFilterBefore(authenticationFilter, UsernamePasswordAuthenticationFilter.class)
                 .formLogin()
                 .loginPage("/login")
+//                .failureHandler(failureHandler)
                 .permitAll()
                 .and()
                 .logout()

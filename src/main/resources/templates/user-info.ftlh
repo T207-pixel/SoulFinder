@@ -1,36 +1,41 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SoulFinder</title>
-</head>
-<body>
-<h1>SoulFinder</h1><hr>
-<h3>Контактная информация пользователя ${user.name}</h3>
-<b>Если увидите пропавшего ченловека данного пользователя, обращайтесь по этим контактам:</b><br>
-<b>Номер телефона: </b> ${user.phoneNumber}<br>
-<b>Email: </b> ${user.email}<br>
+<#import "blocks/template.ftlh" as t>
+<@t.template user>
 
-<h4>Объявления пользователя ${user.name}</h4>
 
-<#list posts as post>
-    <div>
-        <p><b>${post.title}</b> | <a href="/post/${post.id}">Подробнее...</a> </p>
+<div class="container mt-4">
+<h3 class="mb-4">Контактная информация пользователя ${user.name}</h3>
+<p><b>Если увидите пропавшего ченловека данного пользователя, обращайтесь по этим контактам:</b><br>
+    <b>Номер телефона: </b> ${user.phoneNumber}<br>
+    <b>Email: </b> ${user.email}<br>
+
+    <h4 class="mt-4">Объявления пользователя</h4>
+    <#list posts as post>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p><b>${post.title}</b> | <a href="/post/${post.id}" class="stretched-link">Подробнее...</a> </p>
+        </div>
     </div>
     <#else>
-    <h3>Пропавших нет</h3>
-</#list>
+        <p class="mt-4">Пропавших нет</p>
+    </#list>
 
-<h3>Участвует в поисковых операциях</h3>
-<#list postsParticipant as post>
-    <div>
-        <p><b>${post.title}</b> | <a href="/post/${post.id}">Подробнее...</a> </p>
+    <h3 class="mt-4">Участвует в поисковых операциях</h3>
+    <#list postsParticipant as post>
+    <div class="card mb-3">
+        <div class="card-body">
+            <p><b>${post.title}</b> | <a href="/post/${post.id}" class="stretched-link">Подробнее...</a> </p>
+        </div>
     </div>
     <#else>
-    Пока ни в одной
-</#list>
+    <p class="mt-4">Пока ни в одной</p>
+    </#list>
 
-<#if errorMessage??>
-    <h2 style="color: red">${errorMessage}</h2>
+    <#if errorMessage??>
+    <div class="alert alert-danger mt-4" role="alert">
+        ${errorMessage}
+    </div>
 </#if>
-</body>
-</html>
+</div>
+
+
+</@t.template>

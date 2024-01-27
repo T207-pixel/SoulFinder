@@ -1,40 +1,61 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SoulFinder</title>
-</head>
-<body>
-<h1>SoulFinder</h1><hr>
-<h4>Подробная информация о пропавшем человеке</h4>
+<#import "blocks/template.ftlh" as t>
+<@t.template user>
 
-<#list images as img>
-    <img src="/images/${img.id}" height="333px"/><br><br>
-</#list>
+<div class="container mt-4">
+    <h4 class="mb-4">Подробная информация о пропавшем человеке</h4>
 
-<b>Имя Фамилия Отчество: </b>${post.title}<br>
-<b>Возраст пропавшего: </b>${post.age}<br>
-<b>Описание пропавшего: </b>${post.description}<br>
-<b>Дата исчезновения: </b>${post.date_of_disappearance}<br>
-<b>Город/Местность исчезновения: </b>${post.location}<br>
-<b>Дата создания поста: </b>${post.dateOfCreated?date("yyyy-MM-dd")}<br>
-<b>Человек, создавший данную запись: </b><a href="/user/${post.user.id}">${post.user.name}</a><br>
-
-<form action="/post/${post.id}/take_part" method="post">
-    <input type="hidden" name="_csrf" value="${_csrf.token}">
-    <input type="submit" value="Принять участие"/>
-</form>
-
-<#if users?? && users?size != 0>
-    Список участников:
-<ol>
-        <#list users as user>
-        <li><a href="/user/${user.id}">${user.name} </a> </li>
+    <div class="row">
+        <#list images as img>
+        <div class="col-lg-4 col-md-6 mb-4">
+            <img src="/images/${img.id}" class="img-fluid rounded" />
+        </div>
     </#list>
-</ol>
-    <#else>
-    <p>Участников не обнаружено</p>
-</#if>
+    </div>
 
-</body>
-</html>
+    <dl class="row mt-4">
+    <dt class="col-sm-3">Имя Фамилия Отчество:</dt>
+    <dd class="col-sm-9">${post.title}</dd>
+
+    <dt class="col-sm-3">Возраст пропавшего:</dt>
+    <dd class="col-sm-9">${post.age}</dd>
+
+    <dt class="col-sm-3">Описание пропавшего:</dt>
+    <dd class="col-sm-9">${post.description}</dd>
+
+    <dt class="col-sm-3">Дата исчезновения:</dt>
+    <dd class="col-sm-9">${post.date_of_disappearance}</dd>
+
+    <dt class="col-sm-3">Город/Местность исчезновения:</dt>
+    <dd class="col-sm-9">${post.location}</dd>
+
+    <dt class="col-sm-3">Дата создания поста:</dt>
+    <dd class="col-sm-9">${post.dateOfCreated?date("yyyy-MM-dd")}</dd>
+
+    <dt class="col-sm-3">Человек, создавший данную запись:</dt>
+    <dd class="col-sm-9"><a href="/user/${post.user.id}">${post.user.name}</a></dd>
+    </dl>
+
+    <#if user.email??>
+        <form action="/post/${post.id}/take_part" method="post" class="mt-4">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <button type="submit" class="btn btn-dark">Принять участие</button>
+        </form>
+    </#if>
+
+    <#if users?? && users?size != 0>
+    <div class="mt-2 dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+            Список участников
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <#list users as user>
+            <li><a class="dropdown-item" href="/user/${user.id}">${user.name}</a></li>
+        </#list>
+        </ul>
+    </div>
+    <#else>
+    <p class="mt-4">Участников не обнаружено</p>
+    </#if>
+</div>
+
+</@t.template>

@@ -33,8 +33,9 @@ public class ProductController {
     }
 
     @GetMapping("/post/{id}")
-    public String postInfo(@PathVariable Long id, Model model) {
+    public String postInfo(@PathVariable Long id, Model model, Principal principal) {
         Post post = productService.getProductById(id);
+        model.addAttribute("user", productService.getUserByPrincipal(principal));
         model.addAttribute("post", productService.getProductById(id));
         model.addAttribute("images", post.getImages());
         model.addAttribute("users", participantService.getParticipants(id));
@@ -63,7 +64,13 @@ public class ProductController {
             model.addAttribute("errorPost", post);
             return "create-post-page";
         }
-        productService.saveProduct(principal, post, file1, file2, file3);
+        if (!productService.saveProduct(principal, post, file1, file2, file3)) {
+            System.out.println("I'm here2");
+            model.addAttribute("user", productService.getUserByPrincipal(principal));
+            model.addAttribute("overFlow", "К сожалению вы не можете добавить более пяти постов");
+            model.addAttribute("errorPost", post);
+            return "create-post-page";
+        }
         return "redirect:/";
     }
 

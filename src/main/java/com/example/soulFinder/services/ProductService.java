@@ -37,7 +37,13 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public void saveProduct(Principal principal, Post post, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
+    public boolean saveProduct(Principal principal, Post post, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
+        List<Post> userPosts = productRepository.findAllByUser(getUserByPrincipal(principal));
+        System.out.println(userPosts.size());
+        if (userPosts.size() == 5) {
+            System.out.println("I'm here 1");
+            return false;
+        }
         post.setUser(getUserByPrincipal(principal));
         Image image1;
         Image image2;
@@ -59,6 +65,7 @@ public class ProductService {
         Post postFromDb = productRepository.save(post);
         postFromDb.setPreviewImageId(postFromDb.getImages().get(0).getId());
         productRepository.save(post);
+        return true;
     }
 
     public User getUserByPrincipal(Principal principal) {

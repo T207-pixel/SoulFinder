@@ -1,48 +1,56 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>SoulFinder</title>
-</head>
-<body>
-<h1>SoulFinder</h1><hr>
+<#import "blocks/template.ftlh" as t>
+<@t.template user>
+
 <#if user.email??>
     <h3>Имя пользователя: <i>${user.name}</i></h3>
-    <form action="/logout" method="post">
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="submit" value="Выйти"/>
-    </form>
-    <form action="/openProfile" method="get">
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="submit" value="Профиль"/>
-    </form>
-    <form action="/post/create" method="get">
-        <input type="hidden" name="_csrf" value="${_csrf.token}">
-        <input type="submit" value="Создать объявление"/>
-    </form>
+
+    <div class="mx-2 px-2 btn-group" role="group">
+        <form action="/logout" method="post">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input type="submit" class="btn btn-dark  mr-2" value="Выйти"/>
+        </form>
+        <form action="/openProfile" method="get">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input type="submit" class="btn btn-dark  mr-2" value="Профиль"/>
+        </form>
+        <form action="/post/create" method="get">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <input type="submit" class="btn btn-dark  mr-2" value="Создать объявление"/>
+        </form>
+    </div>
+
     <#if user.isAdmin()>
-        <a href="/admin">Панель админиистратора</a>
+        <a href="/admin" class="btn btn-primary">Панель админиистратора</a>
     </#if>
-<#else>
-    <a href="/login">Войти</a></h1>
 </#if>
 <hr>
-<h4>Список пропавших людей</h4>
+<h4 class="display-4 text-center">Список пропавших людей</h4>
 
-<form action="/" method="get">
-    Поиск по названию объявления: <input type="text" name="title"><br>
-    <input type="submit" value="Поиск"/>
+<form action="/" method="get" class="form-inline m-3">
+    <label for="title" class="fs-3 mr-2">Поиск по названию объявления:</label>
+    <input type="text" id="title" name="title" class="form-control mr-2 w-50">
+    <input type="submit" value="Поиск" class="btn btn-dark">
 </form>
 
-<#list posts as post>
-    <div>
-        <p><b>${post.title}</b> | <a href="/post/${post.id}">Подробнее...</a> </p>
-        <#assign img = post.images[0]>
-        <img src="/images/${img.id}" height="50px"/><br><br>
-    </div>
+<div class="row row-cols-1 row-cols-md-3">
+    <#list posts as post>
+    <a href="/post/${post.id}" class="product-link">
+        <div class="card text-white bg-dark my-3 product m-3">
+            <#assign img = post.images[0]>
+            <img src="/images/${img.id}"
+                 class="card-img-top">
+            <div class="card-body">
+                <h5 class="card-title">${post.title}</h5>
+            </div>
+            <div class="card-footer">
+                ${post.location}
+            </div>
+        </div>
+    </a>
     <#else>
-    <h3>Искать некого</h3>
+    <h1 style="text-align: center">Не найдено</h1>
 </#list>
+</div>
 
 <!--<#if user.email??>-->
 <!--<hr>-->
@@ -69,5 +77,4 @@
     </ul>
 </#if>
 
-</body>
-</html>
+</@t.template>

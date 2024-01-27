@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>SoulFinder</title>
-</head>
-<body>
-<h1>SoulFinder</h1>
-<hr>
-<h4>Панель администратора</h4>
-<table border="1">
+<#import "blocks/template.ftlh" as t>
+<@t.template user>
+<h1 style="text-align: center">Панель администратора</h1><hr>
+<table class="table table-hover table-dark">
+
     <tr>
         <th>Email</th>
         <th>Номер телефона</th>
@@ -36,5 +31,4 @@
         <h3>Пользователей нет</h3>
     </#list>
 </table>
-</body>
-</html>
+</@t.template>
