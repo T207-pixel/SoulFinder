@@ -2,7 +2,7 @@ package com.example.soulFinder.controllers;
 
 import com.example.soulFinder.models.Post;
 import com.example.soulFinder.services.ParticipantService;
-import com.example.soulFinder.services.ProductService;
+import com.example.soulFinder.services.PostService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,24 +19,24 @@ import java.security.Principal;
 
 @Controller
 @RequiredArgsConstructor
-public class ProductController {
+public class PostController {
 
-    private final ProductService productService;
+    private final PostService postService;
 
     private final ParticipantService participantService;
 
     @GetMapping("/")
     public String posts(@RequestParam(name = "title", required = false) String title, Principal principal, Model model) {
-        model.addAttribute("posts", productService.listProducts(title));
-        model.addAttribute("user", productService.getUserByPrincipal(principal));
+        model.addAttribute("posts", postService.listProducts(title));
+        model.addAttribute("user", postService.getUserByPrincipal(principal));
         return "posts";
     }
 
     @GetMapping("/post/{id}")
     public String postInfo(@PathVariable Long id, Model model, Principal principal) {
-        Post post = productService.getProductById(id);
-        model.addAttribute("user", productService.getUserByPrincipal(principal));
-        model.addAttribute("post", productService.getProductById(id));
+        Post post = postService.getProductById(id);
+        model.addAttribute("user", postService.getUserByPrincipal(principal));
+        model.addAttribute("post", postService.getProductById(id));
         model.addAttribute("images", post.getImages());
         model.addAttribute("users", participantService.getParticipants(id));
         return "post-info";
@@ -50,7 +50,7 @@ public class ProductController {
 
     @GetMapping("/post/create")
     public String createPostPage(Principal principal, Model model) {
-        model.addAttribute("user", productService.getUserByPrincipal(principal));
+        model.addAttribute("user", postService.getUserByPrincipal(principal));
         return "create-post-page";
     }
 
@@ -58,15 +58,15 @@ public class ProductController {
     public String createPost(@RequestParam("file1") MultipartFile file1, @RequestParam("file2") MultipartFile file2,
                              @RequestParam("file3") MultipartFile file3, @Valid Post post, BindingResult bindingResult, Principal principal, Model model) throws IOException {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("posts", productService.listProducts(""));
-            model.addAttribute("user", productService.getUserByPrincipal(principal));
+            model.addAttribute("posts", postService.listProducts(""));
+            model.addAttribute("user", postService.getUserByPrincipal(principal));
             model.addAttribute("errors", bindingResult.getAllErrors());
             model.addAttribute("errorPost", post);
             return "create-post-page";
         }
-        if (!productService.saveProduct(principal, post, file1, file2, file3)) {
+        if (!postService.saveProduct(principal, post, file1, file2, file3)) {
             System.out.println("I'm here2");
-            model.addAttribute("user", productService.getUserByPrincipal(principal));
+            model.addAttribute("user", postService.getUserByPrincipal(principal));
             model.addAttribute("overFlow", "К сожалению вы не можете добавить более пяти постов");
             model.addAttribute("errorPost", post);
             return "create-post-page";
@@ -76,7 +76,7 @@ public class ProductController {
 
     @PostMapping("/post/delete/{id}")
     public String deletePost(@PathVariable Long id) {
-        productService.deleteProduct(id);
+        postService.deleteProduct(id);
         return "redirect:/";
     }
 }

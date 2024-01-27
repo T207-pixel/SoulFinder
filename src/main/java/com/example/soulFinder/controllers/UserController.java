@@ -2,7 +2,7 @@ package com.example.soulFinder.controllers;
 
 import com.example.soulFinder.models.User;
 import com.example.soulFinder.services.ParticipantService;
-import com.example.soulFinder.services.ProductService;
+import com.example.soulFinder.services.PostService;
 import com.example.soulFinder.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
@@ -11,7 +11,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.security.Principal;
 
@@ -22,7 +21,7 @@ public class UserController {
 
     private final UserService userService;
 
-    private final ProductService productService;
+    private final PostService postService;
 
     private final ParticipantService participantService;
 
@@ -71,7 +70,7 @@ public class UserController {
 
     @GetMapping("/openProfile")
     public String userProfile(Principal principal, Model model) {
-        User user = productService.getUserByPrincipal(principal);
+        User user = postService.getUserByPrincipal(principal);
         model.addAttribute("user", user);
         model.addAttribute("posts", user.getPosts());
         model.addAttribute("postsParticipant", participantService.getParticipantPosts(user.getId()));

@@ -3,7 +3,7 @@ package com.example.soulFinder.services;
 import com.example.soulFinder.models.Image;
 import com.example.soulFinder.models.Post;
 import com.example.soulFinder.models.User;
-import com.example.soulFinder.repositories.ProductRepository;
+import com.example.soulFinder.repositories.PostRepository;
 import com.example.soulFinder.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,27 +18,27 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class ProductService {
+public class PostService {
 
-    private final ProductRepository productRepository;
+    private final PostRepository postRepository;
 
     private final UserRepository userRepository;
 
     public List<Post> listProducts(String title) {
         if (title != null) {
             List<Post> neededPosts = new ArrayList<>();
-            for (Post post : productRepository.findAll()) {
+            for (Post post : postRepository.findAll()) {
                 if (post.getTitle().contains(title)) {
                     neededPosts.add(post);
                 }
             }
             return neededPosts;
         }
-        return productRepository.findAll();
+        return postRepository.findAll();
     }
 
     public boolean saveProduct(Principal principal, Post post, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
-        List<Post> userPosts = productRepository.findAllByUser(getUserByPrincipal(principal));
+        List<Post> userPosts = postRepository.findAllByUser(getUserByPrincipal(principal));
         System.out.println(userPosts.size());
         if (userPosts.size() == 5) {
             System.out.println("I'm here 1");
@@ -62,9 +62,9 @@ public class ProductService {
             post.addImageToProduct(image3);
         }
         log.info("Saving new Product. Title: {}; Author email {}", post.getTitle(), post.getUser().getEmail());
-        Post postFromDb = productRepository.save(post);
+        Post postFromDb = postRepository.save(post);
         postFromDb.setPreviewImageId(postFromDb.getImages().get(0).getId());
-        productRepository.save(post);
+        postRepository.save(post);
         return true;
     }
 
@@ -84,11 +84,11 @@ public class ProductService {
     }
 
     public void deleteProduct(Long id) {
-        productRepository.deleteById(id);
+        postRepository.deleteById(id);
     }
 
     public Post getProductById(Long id) {
-        return productRepository.findById(id).orElse(null);
+        return postRepository.findById(id).orElse(null);
     }
 
 }
