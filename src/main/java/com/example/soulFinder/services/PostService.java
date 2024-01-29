@@ -7,6 +7,7 @@ import com.example.soulFinder.repositories.PostRepository;
 import com.example.soulFinder.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.postgresql.geometric.PGpoint;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -37,7 +38,7 @@ public class PostService {
         return postRepository.findAll();
     }
 
-    public boolean saveProduct(Principal principal, Post post, MultipartFile file1, MultipartFile file2, MultipartFile file3) throws IOException {
+    public boolean saveProduct(Principal principal, Post post, MultipartFile file1, MultipartFile file2, MultipartFile file3, String coordinates) throws IOException {
         List<Post> userPosts = postRepository.findAllByUser(getUserByPrincipal(principal));
         System.out.println(userPosts.size());
         if (userPosts.size() == 5) {
@@ -60,6 +61,15 @@ public class PostService {
         if (file3.getSize() != 0) {
             image3 = toImageEntity(file3);
             post.addImageToProduct(image3);
+        }
+        if (!coordinates.isEmpty()) {
+            String[] parts = coordinates.split(", ");
+            double x = Double.parseDouble(parts[0]);
+            double y = Double.parseDouble(parts[1]);
+            System.out.println("X: " + x);
+            System.out.println("Y: " + y);
+            PGpoint point = new PGpoint(x, y);
+            post.addCoordinates(point);
         }
         log.info("Saving new Product. Title: {}; Author email {}", post.getTitle(), post.getUser().getEmail());
         Post postFromDb = postRepository.save(post);

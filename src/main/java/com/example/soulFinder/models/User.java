@@ -35,7 +35,7 @@ public class User implements UserDetails {
     private String phoneNumber;
 
     @Column(name = "name")
-    @Size(min = 5, max = 100, message = "Имя должно иметь 3 - 25 символов")
+    @Size(min = 3, max = 100, message = "Имя должно иметь 3 - 25 символов")
     private String name;
 
     @Column(name = "active")

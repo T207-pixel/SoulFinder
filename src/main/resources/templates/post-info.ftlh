@@ -35,6 +35,13 @@
     <dd class="col-sm-9"><a href="/user/${post.user.id}">${post.user.name}</a></dd>
     </dl>
 
+    <div id="map-test" class="map"></div>
+    <script
+        src="https://api-maps.yandex.ru/2.1/?apikey=${yandexMapsApiKey}&lang=ru_RU"
+        type="text/javascript"
+    ></script>
+    <script id="myScript" arg1="${coordinates[0]}" arg2="${coordinates[1]}" src="/static/js/script.js"></script>
+
     <#if user.email??>
         <form action="/post/${post.id}/take_part" method="post" class="mt-4">
             <input type="hidden" name="_csrf" value="${_csrf.token}">

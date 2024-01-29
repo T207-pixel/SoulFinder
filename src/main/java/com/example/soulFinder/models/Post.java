@@ -6,6 +6,7 @@ import org.hibernate.annotations.BatchSize;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.postgresql.geometric.PGpoint;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
@@ -43,6 +44,9 @@ public class Post {
     @Size(max = 250, message = "Описание не должно быть более 250 символов")
     private String location;
 
+    @NotNull(message = "Введите координаты")
+    private PGpoint coordinates;
+
     @Column(name = "date_of_disappearance")
     @Temporal(TemporalType.DATE)
     @PastOrPresentDate
@@ -75,7 +79,8 @@ public class Post {
         images.add(image);
     }
 
-//    public void addParticipantToPost(User user) {
-//        participants.add(user);
-//    }
+    public void addCoordinates(PGpoint point) {
+        this.coordinates = point;
+    }
+
 }

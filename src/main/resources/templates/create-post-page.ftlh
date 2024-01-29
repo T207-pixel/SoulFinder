@@ -34,6 +34,11 @@
                            id="location" name="location" value="${errorPost.location}">
                 </div>
                 <div class="form-group">
+                    <label for="coordinates">Возможные координаты Исчезновения: </label>
+                    <input type="text" required class="form-control"
+                           id="coordinates" name="coordinates" value="${errorPost.coordinates}">
+                </div>
+                <div class="form-group">
                     <label for="date_of_disappearance">Дата исчезновения: </label>
                     <input type="date" required class="form-control"
                            id="date_of_disappearance" name="date_of_disappearance" value="${errorPost.date_of_disappearance?string("yyyy-MM-dd")}">
@@ -59,6 +64,11 @@
                     <label for="location">Город/Местность исчезновения: </label>
                     <input type="text" required class="form-control"
                            id="location" name="location">
+                </div>
+                <div class="form-group">
+                    <label for="coordinates">Возможные координаты Исчезновения: </label>
+                    <input type="text" required class="form-control"
+                           id="coordinates" name="coordinates">
                 </div>
                 <div class="form-group">
                     <label for="date_of_disappearance">Дата исчезновения: </label>
