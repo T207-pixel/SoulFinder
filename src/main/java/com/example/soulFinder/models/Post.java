@@ -24,6 +24,9 @@ public class Post {
     @Column(name = "id")
     private Long id;
 
+    @Column(name = "isPostCheckedByAdmin")
+    private Boolean isPostCheckedByAdmin = false;
+
     @Column(name = "title")
     @NotEmpty(message = "Имя Фамилия Отчество  не должно быть пустыми")
     @Size(min = 5, max = 100, message = "Введите понятное фио")

@@ -11,9 +11,16 @@
     <h4 class="mt-4">Объявления пользователя</h4>
     <#list posts as post>
     <div class="card mb-3">
+        <#if post.isPostCheckedByAdmin || user.isAdmin()>
         <div class="card-body">
             <p><b>${post.title}</b> | <a href="/post/${post.id}" class="stretched-link">Подробнее...</a> </p>
         </div>
+        <#else>
+        <div class="alert alert-warning" role="alert">
+            Пост проходит проверку, ожидайте
+            <p><b>${post.title}</b> | <a href="/post/${post.id}" class="stretched-link">Подробнее...</a> </p>
+        </div>
+        </#if>
     </div>
     <#else>
         <p class="mt-4">Пропавших нет</p>

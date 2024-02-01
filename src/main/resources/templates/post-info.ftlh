@@ -4,6 +4,19 @@
 <div class="container mt-4">
     <h4 class="mb-4">Подробная информация о пропавшем человеке</h4>
 
+    <#if user.isAdmin() && !post.isPostCheckedByAdmin>
+    <div class="btn-group" role="group">
+        <form action="/post/${post.id}/approve" method="post" class="mt-4 mb-4 mr-1">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <button type="submit" class="btn btn-success">Подтвердить</button>
+        </form>
+        <form action="/post/delete/${post.id}" method="post" class="mt-4 mb-4 ml-1">
+            <input type="hidden" name="_csrf" value="${_csrf.token}">
+            <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+    </div>
+    </#if>
+
     <div class="row">
         <#list images as img>
         <div class="col-lg-4 col-md-6 mb-4">

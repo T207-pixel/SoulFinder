@@ -89,6 +89,12 @@ public class PostController {
         return "redirect:/";
     }
 
+    @PostMapping("/post/{id}/approve")
+    public String approvePost(@PathVariable Long id) {
+        postService.approvePost(id);
+        return "redirect:/";
+    }
+
     public List<Double> pgpointToList(PGpoint point) {
         return Arrays.asList(point.x, point.y);
     }

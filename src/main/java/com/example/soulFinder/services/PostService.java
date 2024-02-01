@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -99,6 +100,10 @@ public class PostService {
 
     public Post getProductById(Long id) {
         return postRepository.findById(id).orElse(null);
+    }
+
+    public void approvePost(Long id) {
+        postRepository.setTrueIsPostCheckedByAdmin(id);
     }
 
 }

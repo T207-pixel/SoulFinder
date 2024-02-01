@@ -34,6 +34,7 @@
 
 <div class="row row-cols-1 row-cols-md-3">
     <#list posts as post>
+    <#if post.isPostCheckedByAdmin || user.isAdmin()>
     <a href="/post/${post.id}" class="product-link">
         <div class="card text-white bg-dark my-3 product m-3">
             <#assign img = post.images[0]>
@@ -45,8 +46,14 @@
             <div class="card-footer">
                 ${post.location}
             </div>
+            <#if !post.isPostCheckedByAdmin && user.isAdmin()>
+                <div class="alert alert-warning" role="alert">
+                    Проверить контент
+                </div>
+            </#if>
         </div>
     </a>
+    </#if>
     <#else>
     <h1 style="text-align: center">Не найдено</h1>
 </#list>
